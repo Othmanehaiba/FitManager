@@ -316,17 +316,17 @@
             </div>
 
             <!-- Login Form -->
-            <form class="auth-form active" id="login-form">
+            <form class="auth-form active" id="login-form" action="formhandling.php" method="post">
                 <h2 class="form-title">Bienvenue</h2>
                 
                 <div class="form-group">
                     <label for="login-email">Email</label>
-                    <input type="email" id="login-email" class="form-control" placeholder="exemple@email.com" required>
+                    <input type="email" id="login-email" name="email" class="form-control" placeholder="exemple@email.com" required>
                 </div>
 
                 <div class="form-group">
                     <label for="login-password">Mot de passe</label>
-                    <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+                    <input type="password" id="login-password" name="login-pass" class="form-control" placeholder="••••••••" required>
                 </div>
 
                 <div class="checkbox-group">
@@ -334,69 +334,43 @@
                     <label for="remember-me">Se souvenir de moi</label>
                 </div>
 
-                <button type="submit" class="btn-auth">Se connecter</button>
+                <button type="submit" class="btn-auth" name="login">Se connecter</button>
 
-                <div class="forgot-password">
-                    <a href="#">Mot de passe oublié ?</a>
-                </div>
-
-                <div class="divider">
-                    <span>ou continuer avec</span>
-                </div>
-
-                <div class="social-login">
-                    <button type="button" class="btn-social" title="Google">🔵</button>
-                    <button type="button" class="btn-social" title="Facebook">📘</button>
-                    <button type="button" class="btn-social" title="Apple">🍎</button>
-                </div>
             </form>
 
             <!-- Signup Form -->
-            <form class="auth-form" id="signup-form">
+            <form class="auth-form" id="signup-form" action="formhandling.php" method="post">
                 <h2 class="form-title">Créer un compte</h2>
                 
-                <div class="form-row">
+                <div class="form-row" method = "post">
                     <div class="form-group">
                         <label for="signup-firstname">Prénom</label>
-                        <input type="text" id="signup-firstname" class="form-control" placeholder="Jean" required>
+                        <input type="text" id="signup-firstname" name="fname" class="form-control" placeholder="Jean" required>
                     </div>
                     <div class="form-group">
                         <label for="signup-lastname">Nom</label>
-                        <input type="text" id="signup-lastname" class="form-control" placeholder="Dupont" required>
+                        <input type="text" id="signup-lastname" name="lname" class="form-control" placeholder="Dupont" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" class="form-control" placeholder="exemple@email.com" required>
+                    <input type="email" id="signup-email" class="form-control" name="emailSignup" placeholder="exemple@email.com" required>
                 </div>
 
                 <div class="form-group">
                     <label for="signup-password">Mot de passe</label>
-                    <input type="password" id="signup-password" class="form-control" placeholder="••••••••" required>
+                    <input type="password" id="signup-password" name="signup_pass" class="form-control" placeholder="••••••••" required>
                 </div>
 
                 <div class="form-group">
                     <label for="signup-confirm-password">Confirmer le mot de passe</label>
-                    <input type="password" id="signup-confirm-password" class="form-control" placeholder="••••••••" required>
+                    <input type="password" id="signup-confirm-password" name="conf_signup_pass" class="form-control" placeholder="••••••••" required>
                 </div>
 
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms" required>
-                    <label for="terms">J'accepte les conditions d'utilisation</label>
-                </div>
+                <button type="submit" name="signup" class="btn-auth">S'inscrire</button>
 
-                <button type="submit" class="btn-auth">S'inscrire</button>
-
-                <div class="divider">
-                    <span>ou s'inscrire avec</span>
-                </div>
-
-                <div class="social-login">
-                    <button type="button" class="btn-social" title="Google">🔵</button>
-                    <button type="button" class="btn-social" title="Facebook">📘</button>
-                    <button type="button" class="btn-social" title="Apple">🍎</button>
-                </div>
+                
             </form>
         </div>
     </div>

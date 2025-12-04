@@ -33,7 +33,7 @@
         <div class="sidebar-footer">
             <a href="#" class="nav-item">
                 <span class="icon">🚪</span>
-                <span>Déconnexion</span>
+                <span onclick="window.location.href = 'login.php'" >Déconnexion</span>
                 
             </a>
         </div>
@@ -55,12 +55,24 @@
 
         <!-- Dashboard Page -->
         <div class="page" id="dashboard-page">
+            
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon">📅</div>
                     <div class="stat-details">
                         <h3>Total Cours</h3>
-                        <p class="stat-number">24</p>
+                        <p class="stat-number">
+                            <?php 
+                                include "./database/db.php";
+
+                                $res = $conn->query('select count(nomCour) as total from Cour');
+                                if(!$res){
+                                    die("data crashed: " . $conn->error);
+                                }
+                                $row = $res->fetch_assoc();
+                                echo "$res[total]";
+                            ?>
+                        </p>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -85,6 +97,7 @@
                     </div>
                 </div>
             </div>
+            
 
             <div class="charts-grid">
                 <div class="chart-card">
@@ -116,8 +129,11 @@
                     </div>
                 </div>
             </div>
+
+            
         </div>
 
+        
         <!-- Courses Page -->
         <div class="page" id="courses-page" style="display: none;">
             <div class="page-header">
@@ -134,6 +150,7 @@
                 </div>
             </div>
 
+            
             <table class="data-table">
                 <thead>
                     <tr>
@@ -147,42 +164,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Yoga Matinal</td>
-                        <td><span class="badge badge-yoga">Yoga</span></td>
-                        <td>05/12/2024</td>
-                        <td>08:00</td>
-                        <td>60 min</td>
-                        <td>20</td>
-                        <td>
-                            <button class="btn-icon" onclick="openModal('edit-course')" title="Modifier">✏️</button>
-                            <button class="btn-icon" onclick="confirmDelete()" title="Supprimer">🗑️</button>
-                        </td>
+                   <?php          
+                        include './database/db.php';
+
+                        $sql = 'select * from Cour';
+                        $res = $conn->query($sql);
+                        if(!$res){
+                            die("data crashed: " . $conn->error);
+                        }
+
+                        foreach($res as $row){
+                            echo "
+                            <tr>
+                                <td>$row[nomCour]</td>
+                                <td>$row[categorie]</td>
+                                <td>$row[dateCour]</td>
+                                <td>$row[heure]</td>
+                                <td>$row[durée] Min</td>
+                                <td>$row[nbrMax]</td>
+                                <td>
+                                    <button class='btn-icon' onclick='openModal('edit-equipment')' title='Modifier'>✏️</button>
+                                    <button class='btn-icon' onclick='confirmDelete()' title='Supprimer'>🗑️</button>                                
+                                </td>
                     </tr>
-                    <tr>
-                        <td>Musculation Avancée</td>
-                        <td><span class="badge badge-musculation">Musculation</span></td>
-                        <td>05/12/2024</td>
-                        <td>10:00</td>
-                        <td>90 min</td>
-                        <td>15</td>
-                        <td>
-                            <button class="btn-icon" onclick="openModal('edit-course')" title="Modifier">✏️</button>
-                            <button class="btn-icon" onclick="confirmDelete()" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cardio Training</td>
-                        <td><span class="badge badge-cardio">Cardio</span></td>
-                        <td>06/12/2024</td>
-                        <td>18:00</td>
-                        <td>45 min</td>
-                        <td>25</td>
-                        <td>
-                            <button class="btn-icon" onclick="openModal('edit-course')" title="Modifier">✏️</button>
-                            <button class="btn-icon" onclick="confirmDelete()" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
+                            ";
+                        }
+
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -214,46 +222,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Tapis de course</td>
-                        <td>Cardio</td>
-                        <td>10</td>
-                        <td><span class="status status-good">Bon</span></td>
-                        <td>
-                            <button class="btn-icon" onclick="openModal('edit-equipment')" title="Modifier">✏️</button>
-                            <button class="btn-icon" onclick="confirmDelete()" title="Supprimer">🗑️</button>
-                        </td>
+                     <?php          
+                        include './database/db.php';
+
+                        $sql = 'select * from Equipement';
+                        $res = $conn->query($sql);
+                        if(!$res){
+                            die("data crashed: " . $conn->error);
+                        }
+
+                        foreach($res as $row){
+                            echo "
+                            <tr>
+                                <td>$row[nomEquipement]</td>
+                                <td>$row[typeEquipenet]</td>
+                                <td>$row[qtsDispo]</td>
+                                <td>$row[heure]</td>
+                                <td>$row[durée] Min</td>
+                                <td>$row[nbrMax]</td>
+                                <td>
+                                    <button class='btn-icon' onclick='openModal('edit-equipment')' title='Modifier'>✏️</button>
+                                    <button class='btn-icon' onclick='confirmDelete()' title='Supprimer'>🗑️</button>                                
+                                </td>
                     </tr>
-                    <tr>
-                        <td>Haltères 5kg</td>
-                        <td>Musculation</td>
-                        <td>20</td>
-                        <td><span class="status status-good">Bon</span></td>
-                        <td>
-                            <button class="btn-icon" onclick="openModal('edit-equipment')" title="Modifier">✏️</button>
-                            <button class="btn-icon" onclick="confirmDelete()" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ballons de yoga</td>
-                        <td>Yoga</td>
-                        <td>15</td>
-                        <td><span class="status status-medium">Moyen</span></td>
-                        <td>
-                            <button class="btn-icon" onclick="openModal('edit-equipment')" title="Modifier">✏️</button>
-                            <button class="btn-icon" onclick="confirmDelete()" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Vélo elliptique</td>
-                        <td>Cardio</td>
-                        <td>5</td>
-                        <td><span class="status status-bad">À remplacer</span></td>
-                        <td>
-                            <button class="btn-icon" onclick="openModal('edit-equipment')" title="Modifier">✏️</button>
-                            <button class="btn-icon" onclick="confirmDelete()" title="Supprimer">🗑️</button>
-                        </td>
-                    </tr>
+                            ";
+                        }
+
+                    ?>
                 </tbody>
             </table>
         </div>
