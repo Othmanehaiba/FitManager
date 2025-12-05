@@ -113,7 +113,7 @@ function closeModal() {
 function confirmDelete() {
     if (confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')) {
         // Add your delete logic here
-        alert('Élément supprimé avec succès!');
+        
         // You would typically make an AJAX call to your PHP backend here
     }
 }

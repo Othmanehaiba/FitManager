@@ -64,13 +64,12 @@
                         <p class="stat-number">
                             <?php 
                                 include "./database/db.php";
-
-                                $res = $conn->query('select count(nomCour) as total from Cour');
+                                $res = $conn->query('select count(nomCour) as total from Cour;');
                                 if(!$res){
                                     die("data crashed: " . $conn->error);
                                 }
                                 $row = $res->fetch_assoc();
-                                echo "$res[total]";
+                                echo "$row[total]";
                             ?>
                         </p>
                     </div>
@@ -79,21 +78,51 @@
                     <div class="stat-icon">🏋️</div>
                     <div class="stat-details">
                         <h3>Total Équipements</h3>
-                        <p class="stat-number">156</p>
+                        <p class="stat-number">
+                            <?php 
+                                include "./database/db.php";
+                                $res = $conn->query('select count(nomEquipement) as total from Equipement;');
+                                if(!$res){
+                                    die("data crashed: " . $conn->error);
+                                }
+                                $row = $res->fetch_assoc();
+                                echo "$row[total]";
+                            ?>
+                        </p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">✅</div>
                     <div class="stat-details">
-                        <h3>État Bon</h3>
-                        <p class="stat-number">120</p>
+                        <h3>Disponible</h3>
+                        <p class="stat-number">
+                            <?php 
+                                include "./database/db.php";
+                                $res = $conn->query('select count(etat) as total from Equipement where etat like "Disponible";');
+                                if(!$res){
+                                    die("data crashed: " . $conn->error);
+                                }
+                                $row = $res->fetch_assoc();
+                                echo "$row[total]";
+                            ?>
+                        </p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">⚠️</div>
                     <div class="stat-details">
-                        <h3>À Remplacer</h3>
-                        <p class="stat-number">8</p>
+                        <h3>En maintenance</h3>
+                        <p class="stat-number">
+                            <?php 
+                                include "./database/db.php";
+                                $res = $conn->query('select count(etat) as total from Equipement where etat like "En maintenance";');
+                                if(!$res){
+                                    die("data crashed: " . $conn->error);
+                                }
+                                $row = $res->fetch_assoc();
+                                echo "$row[total]";
+                            ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -183,12 +212,13 @@
                                 <td>$row[durée] Min</td>
                                 <td>$row[nbrMax]</td>
                                 <td>
-                                    <button class='btn-icon' onclick='openModal('edit-equipment')' title='Modifier'>✏️</button>
-                                    <button class='btn-icon' onclick='confirmDelete()' title='Supprimer'>🗑️</button>                                
+                                    <a class='btn-icon' href='edit.php?id=$row[idCour]' title='Modifier'>✏️</a>
+                                    <a class='btn-icon' href='delete.php?id=$row[idCour]' title='Supprimer'>🗑️</a>
                                 </td>
-                    </tr>
+                            </tr>
                             ";
                         }
+
 
                     ?>
                 </tbody>
@@ -235,14 +265,12 @@
                             echo "
                             <tr>
                                 <td>$row[nomEquipement]</td>
-                                <td>$row[typeEquipenet]</td>
+                                <td>$row[typeEquipement]</td>
                                 <td>$row[qtsDispo]</td>
-                                <td>$row[heure]</td>
-                                <td>$row[durée] Min</td>
-                                <td>$row[nbrMax]</td>
+                                <td>$row[etat]</td>
                                 <td>
-                                    <button class='btn-icon' onclick='openModal('edit-equipment')' title='Modifier'>✏️</button>
-                                    <button class='btn-icon' onclick='confirmDelete()' title='Supprimer'>🗑️</button>                                
+                                    <a class='btn-icon' href='editEquipement.php?id=$row[idEquipement]' title='Modifier'>✏️</a>
+                                    <a class='btn-icon' href='deleteEquipement.php?id=$row[idEquipement]' title='Supprimer'>🗑️</a>                                
                                 </td>
                     </tr>
                             ";
@@ -261,24 +289,25 @@
             </div>
 
             <div class="association-grid">
-                <div class="association-card">
-                    <h4>Yoga Matinal</h4>
-                    <p class="course-info">05/12/2024 - 08:00</p>
-                    <div class="equipment-list">
-                        <span class="equipment-tag">Tapis de yoga <button class="remove-tag">×</button></span>
-                        <span class="equipment-tag">Ballons de yoga <button class="remove-tag">×</button></span>
-                    </div>
-                    <button class="btn btn-secondary btn-small" onclick="openModal('manage-association')">Gérer</button>
-                </div>
-                <div class="association-card">
+                <?php 
+                include './database/db.php';
+
+                        $sql = 'select * from cour_equipement ';
+                        $res = $conn->query($sql);
+                        if(!$res){
+                            die("data crashed: " . $conn->error);
+                        }
+                echo"
+                <div class='association-card'>
                     <h4>Musculation Avancée</h4>
-                    <p class="course-info">05/12/2024 - 10:00</p>
-                    <div class="equipment-list">
-                        <span class="equipment-tag">Haltères 5kg <button class="remove-tag">×</button></span>
-                        <span class="equipment-tag">Banc de musculation <button class="remove-tag">×</button></span>
+                    <p class='course-info'>05/12/2024 - 10:00</p>
+                    <div class='equipment-list'>
+                        <span class='equipment-tag'>Haltères 5kg <button class='remove-tag'>×</button></span>
+                        <span class='equipment-tag'>Banc de musculation <button class='remove-tag'>×</button></span>
                     </div>
-                    <button class="btn btn-secondary btn-small" onclick="openModal('manage-association')">Gérer</button>
-                </div>
+                    <button class='btn btn-secondary btn-small' onclick='openModal('manage-association')'>Gérer</button>
+                </div>"
+                ?>
             </div>
         </div>
     </main>
@@ -291,7 +320,7 @@
                 <button class="modal-close" onclick="closeModal()">×</button>
             </div>
             <div class="modal-body">
-                <form id="modalForm">
+                <form id="modalForm" action="create.php" method="post">
                     <!-- Form fields will be populated by JavaScript -->
                     <div class="form-group">
                         <label>Nom</label>
