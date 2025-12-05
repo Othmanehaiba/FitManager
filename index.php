@@ -3,184 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GymPro - Gestion de Salle de Sport</title>
-    <link rel="stylesheet" href="/style/style.css">
-</head>
+    <title>GymPro - Gestion Simple</title>
+    <link rel="stylesheet" href="./style/style.css">
+    </head>
 <body>
-    <!-- Sidebar -->     
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <h1>GymPro</h1>
-        </div>
-        <nav class="sidebar-nav">
-            <a href="#" class="nav-item active" data-page="dashboard">
-                <span class="icon">📊</span>
-                <span>Dashboard</span>
-            </a>
-            <a href="#" class="nav-item" data-page="courses">
-                <span class="icon">📅</span>
-                <span>Cours</span>
-            </a>
-            <a href="#" class="nav-item" data-page="equipments">
-                <span class="icon">🏋️</span>
-                <span>Équipements</span>
-            </a>
-            <a href="#" class="nav-item" data-page="association">
-                <span class="icon">🔗</span>
-                <span>Association</span>
-            </a>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="#" class="nav-item">
-                <span class="icon">🚪</span>
-                <span onclick="window.location.href = 'login.php'" >Déconnexion</span>
-                
-            </a>
-        </div>
-    </aside>
+    <div class="container">
+        <h1>🏋️ GymPro - Gestion de Salle de Sport</h1>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Header -->
-        <header class="header">
-            <button class="menu-toggle" id="menuToggle">☰</button>
-            <h2 id="pageTitle">Dashboard</h2>
-            <div class="header-actions">
-                <button class="btn btn-secondary">Exporter</button>
-                <div class="user-info">
-                    <span>Admin</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Dashboard Page -->
-        <div class="page" id="dashboard-page">
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">📅</div>
-                    <div class="stat-details">
-                        <h3>Total Cours</h3>
-                        <p class="stat-number">
-                            <?php 
-                                include "./database/db.php";
-                                $res = $conn->query('select count(nomCour) as total from Cour;');
-                                if(!$res){
-                                    die("data crashed: " . $conn->error);
-                                }
-                                $row = $res->fetch_assoc();
-                                echo "$row[total]";
-                            ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🏋️</div>
-                    <div class="stat-details">
-                        <h3>Total Équipements</h3>
-                        <p class="stat-number">
-                            <?php 
-                                include "./database/db.php";
-                                $res = $conn->query('select count(nomEquipement) as total from Equipement;');
-                                if(!$res){
-                                    die("data crashed: " . $conn->error);
-                                }
-                                $row = $res->fetch_assoc();
-                                echo "$row[total]";
-                            ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-details">
-                        <h3>Disponible</h3>
-                        <p class="stat-number">
-                            <?php 
-                                include "./database/db.php";
-                                $res = $conn->query('select count(etat) as total from Equipement where etat like "Disponible";');
-                                if(!$res){
-                                    die("data crashed: " . $conn->error);
-                                }
-                                $row = $res->fetch_assoc();
-                                echo "$row[total]";
-                            ?>
-                        </p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⚠️</div>
-                    <div class="stat-details">
-                        <h3>En maintenance</h3>
-                        <p class="stat-number">
-                            <?php 
-                                include "./database/db.php";
-                                $res = $conn->query('select count(etat) as total from Equipement where etat like "En maintenance";');
-                                if(!$res){
-                                    die("data crashed: " . $conn->error);
-                                }
-                                $row = $res->fetch_assoc();
-                                echo "$row[total]";
-                            ?>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-
-            <div class="charts-grid">
-                <div class="chart-card">
-                    <h3>Répartition des Cours</h3>
-                    <div class="chart-placeholder">
-                        <div class="bar" style="height: 80%;">
-                            <span>Yoga<br>12</span>
-                        </div>
-                        <div class="bar" style="height: 60%;">
-                            <span>Musculation<br>8</span>
-                        </div>
-                        <div class="bar" style="height: 40%;">
-                            <span>Cardio<br>4</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <h3>Répartition des Équipements</h3>
-                    <div class="chart-placeholder">
-                        <div class="bar" style="height: 70%;">
-                            <span>Cardio<br>45</span>
-                        </div>
-                        <div class="bar" style="height: 90%;">
-                            <span>Musculation<br>80</span>
-                        </div>
-                        <div class="bar" style="height: 50%;">
-                            <span>Yoga<br>31</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="showSection('courses')">📅 Cours</button>
+            <button class="tab" onclick="showSection('equipments')">🏋️ Équipements</button>
+            <button class="tab" onclick="showSection('associations')">🔗 Associations</button>
+            <a href="login.php" class="btn-logout" onclick="return confirm('Voulez-vous vraiment vous déconnecter?')">🚪 Déconnexion</a>
         </div>
 
-        
-        <!-- Courses Page -->
-        <div class="page" id="courses-page" style="display: none;">
-            <div class="page-header">
-                <h3>Liste des Cours</h3>
-                <div class="page-actions">
-                    <input type="text" class="search-input" placeholder="Rechercher...">
-                    <select class="filter-select">
-                        <option>Tous les types</option>
-                        <option>Yoga</option>
-                        <option>Musculation</option>
-                        <option>Cardio</option>
-                    </select>
-                    <button class="btn btn-primary" onclick="openModal('add-course')">+ Ajouter un cours</button>
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section active">
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Total Cours</h3>
+                    <div class="number">
+                        <?php
+                        require "./database/db.php";
+
+                        $sql = "select count(nomCour) as total from Cour";
+                        $row = $conn->query($sql);
+                        $res = $row->fetch_assoc();
+                        echo"nok22é";
+                        echo $res['total'];
+                        ?>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Équipements</h3>
+                    <div class="number">
+                        <?php
+                        require "./database/db.php";
+
+                        $sql = "select count(idEquipement) as total from Equipement";
+                        $row = $conn->query($sql);
+                        $res = $row->fetch_assoc();
+                        echo $res['total'];
+                        ?>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>Disponible</h3>
+                    <div class="number">
+                        <?php
+                        require "./database/db.php";
+
+                        $sql = "select count(idEquipement) as total from Equipement where etat like 'Disponible'";
+                        $row = $conn->query($sql);
+                        $res = $row->fetch_assoc();
+                        echo $res['total'];
+                        ?>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3>En maintenance</h3>
+                    <div class="number">
+                        <?php
+                        require "./database/db.php";
+
+                        $sql = "select count(idEquipement) as total from Equipement where etat like 'En maintenance'";
+                        $row = $conn->query($sql);
+                        $res = $row->fetch_assoc();
+                        echo $res['total'];
+                        ?>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            
-            <table class="data-table">
+        <!-- Courses Section -->
+        <div id="courses" class="section">
+            <!-- Add Course Form -->
+            <div class="form-container">
+                <h2>Ajouter un Cours</h2>
+                <form action="add_course.php" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nom du cours *</label>
+                            <input type="text" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Catégorie *</label>
+                            <select name="categorie" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="Yoga">Yoga</option>
+                                <option value="Musculation">Musculation</option>
+                                <option value="Cardio">Cardio</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date *</label>
+                            <input type="date" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Heure *</label>
+                            <input type="time" name="heure" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Durée (minutes) *</label>
+                            <input type="number" name="duree" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Max Participants *</label>
+                            <input type="number" name="nbrMax" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ajouter le cours</button>
+                </form>
+            </div>
+
+            <!-- Courses List -->
+            <h2>Liste des Cours</h2>
+            <table>
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -188,60 +133,175 @@
                         <th>Date</th>
                         <th>Heure</th>
                         <th>Durée</th>
-                        <th>Max Participants</th>
+                        <th>Max</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                   <?php          
-                        include './database/db.php';
-
-                        $sql = 'select * from Cour';
-                        $res = $conn->query($sql);
-                        if(!$res){
-                            die("data crashed: " . $conn->error);
-                        }
-
-                        foreach($res as $row){
-                            echo "
-                            <tr>
-                                <td>$row[nomCour]</td>
-                                <td>$row[categorie]</td>
-                                <td>$row[dateCour]</td>
-                                <td>$row[heure]</td>
-                                <td>$row[durée] Min</td>
-                                <td>$row[nbrMax]</td>
-                                <td>
-                                    <a class='btn-icon' href='edit.php?id=$row[idCour]' title='Modifier'>✏️</a>
-                                    <a class='btn-icon' href='delete.php?id=$row[idCour]' title='Supprimer'>🗑️</a>
-                                </td>
-                            </tr>
-                            ";
-                        }
-
-
+                    <?php
+                    require "./database/db.php";
+                    $row = $conn->query('select * from Cour');
+                    $res = $row->fetch_assoc();
+                    foreach($res as $re){
+                    echo "
+                    <tr>
+                        <td>$re[nomCour]</td>
+                        <td>$re[categorie]</td>
+                        <td>$re[date]</td>
+                        <td>$re[heure]</td>
+                        <td>$re[duree] min</td>
+                        <td>$re[nbrMax]</td>
+                        <td class='actions'>
+                            <a href='edit_course.php?id=2' class='btn btn-warning btn-small'>✏️ Modifier</a>
+                            <a href='delete_course.php?id=2' class='btn btn-danger btn-small' onclick='return confirm('Supprimer ce cours?')'>🗑️ Supprimer</a>
+                        </td>
+                    </tr>
+                    ";
+                    }
                     ?>
+                    
                 </tbody>
             </table>
         </div>
 
-        <!-- Equipments Page -->
-        <div class="page" id="equipments-page" style="display: none;">
-            <div class="page-header">
-                <h3>Liste des Équipements</h3>
-                <div class="page-actions">
-                    <input type="text" class="search-input" placeholder="Rechercher...">
-                    <select class="filter-select">
-                        <option>Tous les types</option>
-                        <option>Cardio</option>
-                        <option>Musculation</option>
-                        <option>Yoga</option>
-                    </select>
-                    <button class="btn btn-primary" onclick="openModal('add-equipment')">+ Ajouter un équipement</button>
-                </div>
+        <!-- Associations Section -->
+        <div id="associations" class="section">
+            <!-- Add Association Form -->
+            <div class="form-container">
+                <h2>Créer une Association Cours-Équipement</h2>
+                <form action="add_association.php" method="POST">
+                    <div class="form-group">
+                        <label>Sélectionner un cours *</label>
+                        <select name="idCour" required>
+                            <option value="">Choisir un cours...</option>
+                            <?php
+                            // Example PHP code
+                            // include 'db.php';
+                            // $result = $conn->query("SELECT idCour, nomCour, dateCour, heure FROM Cour");
+                            // while($row = $result->fetch_assoc()) {
+                            //     echo "<option value='{$row['idCour']}'>{$row['nomCour']} - {$row['dateCour']} {$row['heure']}</option>";
+                            // }
+                            ?>
+                            <option value="1">Yoga Débutant - 2024-12-10 10:00</option>
+                            <option value="2">Musculation Avancée - 2024-12-11 14:00</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Sélectionner un équipement *</label>
+                        <select name="idEquipement" required>
+                            <option value="">Choisir un équipement...</option>
+                            <?php
+                            // Example PHP code
+                            // $result = $conn->query("SELECT idEquipement, nomEquipement FROM Equipement WHERE etat='Disponible'");
+                            // while($row = $result->fetch_assoc()) {
+                            //     echo "<option value='{$row['idEquipement']}'>{$row['nomEquipement']}</option>";
+                            // }
+                            ?>
+                            <option value="1">Tapis de course</option>
+                            <option value="2">Haltères 10kg</option>
+                            <option value="3">Tapis de yoga</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Créer l'association</button>
+                </form>
             </div>
 
-            <table class="data-table">
+            <!-- Associations List -->
+            <h2>Liste des Associations</h2>
+            <div class="association-cards">
+                <?php
+                // Example PHP code to display associations
+                // include 'db.php';
+                // $sql = "SELECT ce.id, c.nomCour, c.dateCour, c.heure, e.nomEquipement 
+                //         FROM cour_equipement ce 
+                //         JOIN Cour c ON ce.idCour = c.idCour 
+                //         JOIN Equipement e ON ce.idEquipement = e.idEquipement";
+                // $result = $conn->query($sql);
+                // while($row = $result->fetch_assoc()) {
+                ?>
+                <div class="association-card">
+                    <h3>Yoga Débutant</h3>
+                    <p>📅 2024-12-10 - ⏰ 10:00</p>
+                    <div class="equipment-tags">
+                        <span class="equipment-tag">Tapis de yoga</span>
+                        <span class="equipment-tag">Bloc de yoga</span>
+                    </div>
+                    <div class="actions">
+                        <a href="delete_association.php?id=1" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cette association?')">🗑️ Supprimer</a>
+                    </div>
+                </div>
+
+                <div class="association-card">
+                    <h3>Musculation Avancée</h3>
+                    <p>📅 2024-12-11 - ⏰ 14:00</p>
+                    <div class="equipment-tags">
+                        <span class="equipment-tag">Haltères 10kg</span>
+                        <span class="equipment-tag">Banc de musculation</span>
+                        <span class="equipment-tag">Barre de traction</span>
+                    </div>
+                    <div class="actions">
+                        <a href="delete_association.php?id=2" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cette association?')">🗑️ Supprimer</a>
+                    </div>
+                </div>
+
+                <div class="association-card">
+                    <h3>Cardio Intensif</h3>
+                    <p>📅 2024-12-12 - ⏰ 09:00</p>
+                    <div class="equipment-tags">
+                        <span class="equipment-tag">Tapis de course</span>
+                        <span class="equipment-tag">Vélo elliptique</span>
+                    </div>
+                    <div class="actions">
+                        <a href="delete_association.php?id=3" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cette association?')">🗑️ Supprimer</a>
+                    </div>
+                </div>
+                <?php
+                // }
+                ?>
+            </div>
+        </div>
+
+        <!-- Equipments Section -->
+        <div id="equipments" class="section">
+            <!-- Add Equipment Form -->
+            <div class="form-container">
+                <h2>Ajouter un Équipement</h2>
+                <form action="add_equipment.php" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nom de l'équipement *</label>
+                            <input type="text" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Type *</label>
+                            <select name="type" required>
+                                <option value="">Sélectionner...</option>
+                                <option value="Cardio">Cardio</option>
+                                <option value="Musculation">Musculation</option>
+                                <option value="Yoga">Yoga</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Quantité *</label>
+                            <input type="number" name="quantite" required>
+                        </div>
+                        <div class="form-group">
+                            <label>État *</label>
+                            <select name="etat" required>
+                                <option value="Disponible">Disponible</option>
+                                <option value="En maintenance">En maintenance</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Ajouter l'équipement</button>
+                </form>
+            </div>
+
+            <!-- Equipments List -->
+            <h2>Liste des Équipements</h2>
+            <table>
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -252,118 +312,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                     <?php          
-                        include './database/db.php';
-
-                        $sql = 'select * from Equipement';
-                        $res = $conn->query($sql);
-                        if(!$res){
-                            die("data crashed: " . $conn->error);
-                        }
-
-                        foreach($res as $row){
-                            echo "
-                            <tr>
-                                <td>$row[nomEquipement]</td>
-                                <td>$row[typeEquipement]</td>
-                                <td>$row[qtsDispo]</td>
-                                <td>$row[etat]</td>
-                                <td>
-                                    <a class='btn-icon' href='editEquipement.php?id=$row[idEquipement]' title='Modifier'>✏️</a>
-                                    <a class='btn-icon' href='deleteEquipement.php?id=$row[idEquipement]' title='Supprimer'>🗑️</a>                                
-                                </td>
+                    <?php
+                    // Example PHP code to display equipment
+                    // include 'db.php';
+                    // $result = $conn->query("SELECT * FROM Equipement");
+                    // while($row = $result->fetch_assoc()) {
+                    ?>
+                    <tr>
+                        <td>Tapis de course</td>
+                        <td>Cardio</td>
+                        <td>5</td>
+                        <td>Disponible</td>
+                        <td class="actions">
+                            <a href="edit_equipment.php?id=1" class="btn btn-warning btn-small">✏️ Modifier</a>
+                            <a href="delete_equipment.php?id=1" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cet équipement?')">🗑️ Supprimer</a>
+                        </td>
                     </tr>
-                            ";
-                        }
-
+                    <tr>
+                        <td>Haltères 10kg</td>
+                        <td>Musculation</td>
+                        <td>20</td>
+                        <td>Disponible</td>
+                        <td class="actions">
+                            <a href="edit_equipment.php?id=2" class="btn btn-warning btn-small">✏️ Modifier</a>
+                            <a href="delete_equipment.php?id=2" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cet équipement?')">🗑️ Supprimer</a>
+                        </td>
+                    </tr>
+                    <?php
+                    // }
                     ?>
                 </tbody>
             </table>
         </div>
-
-        <!-- Association Page -->
-        <div class="page" id="association-page" style="display: none;">
-            <div class="page-header">
-                <h3>Association Cours - Équipements</h3>
-                <button class="btn btn-primary" onclick="openModal('add-association')">+ Créer une association</button>
-            </div>
-
-            <div class="association-grid">
-                <?php 
-                include './database/db.php';
-
-                        $sql = 'select * from cour_equipement ';
-                        $res = $conn->query($sql);
-                        if(!$res){
-                            die("data crashed: " . $conn->error);
-                        }
-                echo"
-                <div class='association-card'>
-                    <h4>Musculation Avancée</h4>
-                    <p class='course-info'>05/12/2024 - 10:00</p>
-                    <div class='equipment-list'>
-                        <span class='equipment-tag'>Haltères 5kg <button class='remove-tag'>×</button></span>
-                        <span class='equipment-tag'>Banc de musculation <button class='remove-tag'>×</button></span>
-                    </div>
-                    <button class='btn btn-secondary btn-small' onclick='openModal('manage-association')'>Gérer</button>
-                </div>"
-                ?>
-            </div>
-        </div>
-    </main>
-
-    <!-- Modal -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">Ajouter un cours</h3>
-                <button class="modal-close" onclick="closeModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <form id="modalForm" action="create.php" method="post">
-                    <!-- Form fields will be populated by JavaScript -->
-                    <div class="form-group">
-                        <label>Nom</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Catégorie</label>
-                        <select class="form-control" required>
-                            <option value="">Sélectionner...</option>
-                            <option>Yoga</option>
-                            <option>Musculation</option>
-                            <option>Cardio</option>
-                        </select>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Date</label>
-                            <input type="date" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Heure</label>
-                            <input type="time" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Durée (min)</label>
-                            <input type="number" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Max Participants</label>
-                            <input type="number" class="form-control" required>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
-                <button class="btn btn-primary">Enregistrer</button>
-            </div>
-        </div>
     </div>
-
-    <script src="/style/main.js"></script>
-</body>
+    <script src="./style/main.js"></script>
+    </body>
 </html>
