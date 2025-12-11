@@ -13,6 +13,8 @@ function showSection(sectionId) {
 
             // Show selected section
             document.getElementById(sectionId).classList.add('active');
+            console.log("clicked");
+            
 
             // Add active class to clicked tab
             event.target.classList.add('active');

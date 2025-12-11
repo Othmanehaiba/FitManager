@@ -34,4 +34,14 @@ CREATE TABLE Users (
     lastName VARCHAR(20) NOT NULL
 );
 
+SELECT * FROM Cour
+select count(nomCour) as total from Cour
+select count(nomEquipement) as total from Equipement where etat like "Disponible"
 
+
+
+
+
+
+
+DELETE FROM Cour WHERE idCour = '$id'

@@ -13,12 +13,3 @@ if (!$conn) {
 //     echo "its oky";
 // }
 ?>
-
-
-<?php
-                    require "./database/db.php";
-                    $row = $conn->query('select * from Cour');
-                    $res = $row->fetch_assoc();
-                    echo "
-                    ";
-                    ?>
