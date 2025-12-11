@@ -144,7 +144,7 @@
                                     <td>{$ro['durée']}</td>
                                     <td>{$ro['nbrMax']}</td>
                                     <td class='action-btns'>
-                                        <a href='edit_equipment.php?id={$ro['idCour']}' class='btn btn-warning btn-small'>✏️ Modifier</a>
+                                        <a href='editCour.php?id={$ro['idCour']}' class='btn btn-warning btn-small'>✏️ Modifier</a>
                                         <a href='deleteCour.php?id={$ro['idCour']}' class='btn btn-danger btn-small' onclick='return confirm('Supprimer cet équipement?')'>🗑️ Supprimer</a>
                                     </td>
                                 </tr>
@@ -311,7 +311,7 @@
                                     <td>{$ro['qtsDispo']}</td>
                                     <td>{$ro['etat']}</td>
                                     <td class='action-btns'>
-                                        <a href='edit_equipment.php?id={$ro['idEquipement']}' class='btn btn-warning btn-small'>✏️ Modifier</a>
+                                        <a href='editEquipement.php?id={$ro['idEquipement']}' class='btn btn-warning btn-small'>✏️ Modifier</a>
                                         <a href='deleteEquipement.php?id={$ro['idEquipement']}' class='btn btn-danger btn-small' onclick='return confirm('Supprimer cet équipement?')'>🗑️ Supprimer</a>
                                     </td>
                                 </tr>
