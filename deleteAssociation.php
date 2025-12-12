@@ -5,7 +5,7 @@ if(isset($_GET['id']) && !empty($_GET['id'])){
     $id = $_GET['id'];    
  
     
-    $sql = "DELETE FROM Cour WHERE idCour = '$id'";
+    $sql = "DELETE FROM cour_equipement WHERE idCour = '$id'";
     $result = $conn->query($sql);
     
     if($result){

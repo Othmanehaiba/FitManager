@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -161,7 +163,7 @@
             <!-- Add Association Form -->
             <div class="form-container">
                 <h2>Créer une Association Cours-Équipement</h2>
-                <form action="add_association.php" method="POST">
+                <form action="addAssociation.php" method="POST">
                     <div class="form-group">
                         <label>Sélectionner un cours *</label>
                         <select name="idCour" required>
@@ -180,14 +182,14 @@
                         <select name="idEquipement" required>
                             <option value="">Choisir un équipement...</option>
                             <?php
-                                $result = $conn->query("SELECT idEquipement, nomEquipement FROM Equipement WHERE etat='Disponible'");
+                                $result = $conn->query("SELECT idEquipement, nomEquipement FROM Equipement");
                                 while($row = $result->fetch_assoc()) {
                                     echo "<option value='{$row['idEquipement']}'>{$row['nomEquipement']}</option>";
                                 }
                             ?>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Créer l'association</button>
+                    <button type="submit" name="addAssociation" class="btn btn-primary">Créer l'association</button>
                 </form>
             </div>
 
@@ -195,53 +197,29 @@
             <h2>Liste des Associations</h2>
             <div class="association-cards">
                 <?php
-                // Example PHP code to display associations
-                // include 'db.php';
-                // $sql = "SELECT ce.id, c.nomCour, c.dateCour, c.heure, e.nomEquipement 
-                //         FROM cour_equipement ce 
-                //         JOIN Cour c ON ce.idCour = c.idCour 
-                //         JOIN Equipement e ON ce.idEquipement = e.idEquipement";
-                // $result = $conn->query($sql);
-                // while($row = $result->fetch_assoc()) {
-                ?>
-                <div class="association-card">
-                    <h3>Yoga Débutant</h3>
-                    <p>📅 2024-12-10 - ⏰ 10:00</p>
-                    <div class="equipment-tags">
-                        <span class="equipment-tag">Tapis de yoga</span>
-                        <span class="equipment-tag">Bloc de yoga</span>
-                    </div>
-                    <div class="actions">
-                        <a href="delete_association.php?id=1" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cette association?')">🗑️ Supprimer</a>
-                    </div>
-                </div>
+                    require "./database/db.php";
 
-                <div class="association-card">
-                    <h3>Musculation Avancée</h3>
-                    <p>📅 2024-12-11 - ⏰ 14:00</p>
-                    <div class="equipment-tags">
-                        <span class="equipment-tag">Haltères 10kg</span>
-                        <span class="equipment-tag">Banc de musculation</span>
-                        <span class="equipment-tag">Barre de traction</span>
-                    </div>
-                    <div class="actions">
-                        <a href="delete_association.php?id=2" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cette association?')">🗑️ Supprimer</a>
-                    </div>
-                </div>
+                    $sql = "SELECT c.nomCour, c.dateCour, c.heure, e.nomEquipement, c.idCour 
+                            FROM cour_equipement ce 
+                            JOIN Cour c ON ce.idCour = c.idCour 
+                            JOIN Equipement e ON ce.idEquipement = e.idEquipement";
 
-                <div class="association-card">
-                    <h3>Cardio Intensif</h3>
-                    <p>📅 2024-12-12 - ⏰ 09:00</p>
-                    <div class="equipment-tags">
-                        <span class="equipment-tag">Tapis de course</span>
-                        <span class="equipment-tag">Vélo elliptique</span>
-                    </div>
-                    <div class="actions">
-                        <a href="delete_association.php?id=3" class="btn btn-danger btn-small" onclick="return confirm('Supprimer cette association?')">🗑️ Supprimer</a>
-                    </div>
-                </div>
-                <?php
-                // }
+                    $result = $conn->query($sql);
+
+                    while($row = $result->fetch_assoc()) {
+                        echo "
+                        <div class='association-card'>
+                            <h3>{$row['nomCour']}</h3>
+                            <p>📅 {$row['dateCour']} - ⏰ {$row['heure']}</p>
+                            <div class='equipment-tags'>
+                                <span class='equipment-tag'>{$row['nomEquipement']}</span>
+                            </div>
+                            <div class='actions'>
+                                <a href='deleteAssociation.php?id={$row['idCour']}' class='btn btn-danger btn-small'>🗑️ Supprimer</a>
+                            </div>
+                        </div>
+                        ";
+                    }
                 ?>
             </div>
         </div>

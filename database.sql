@@ -38,10 +38,8 @@ SELECT * FROM Cour
 select count(nomCour) as total from Cour
 select count(nomEquipement) as total from Equipement where etat like "Disponible"
 
+UPDATE Equipement SET nomEquipement='$nomEquipement', qtsDispo='$qts', etat='$etat' WHERE idEquipement='$idE'
 
-
-
-
-
-
+INSERT INTO Cour (nomCour, categorie, dateCour, heure, `durée`, nbrMax)
+            VALUES ('$nomCour', '$categorie', '$dateCour', '$heure', '$duree', '$nbrMax')
 DELETE FROM Cour WHERE idCour = '$id'
