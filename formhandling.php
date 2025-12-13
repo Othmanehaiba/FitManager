@@ -1,31 +1,57 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 session_start();
-include "./database/db.php";
 
-if(isset($_POST['signup'])){
+require "./database/db.php";
+
+if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])){
     if(!empty($_POST['fname']))
         $fname = $_POST['fname'];
     if(!empty($_POST['lname']))
         $lname = $_POST['lname'];
     if(!empty($_POST['emailSignup']))
-        $email_signup = $_POST['emailsignup'];
+        $email_signup = $_POST['emailSignup'];
     if(!empty($_POST['signup_pass']))
         $sign_pass = $_POST['signup_pass'];
     if(!empty($_POST['conf_signup_pass']))
         $conf_pass = $_POST['conf_signup_pass'];
-}
+    
+    $sql = "INSERT INTO user (email, mdp, firstName, lastName)
+     VALUES('$email_signup' , '$sign_pass' , '$fname' , '$lname')";
+    $row = $conn->query($sql);
 
-$sql = "INSERT INTO user VALUES($email , $sign_pass , $fname , $lname)";
-
-
-
-if (isset($_POST['login'])){
-    if(!empty($_POST['email'])){
-        $email = $_POST['email'];
-    }
-    if(!empty($_POST['login-pass'])){
-        $login_pass = $_POST['login-pass'];
+    header("Location: login.php");
+    exit();
+    if(!$row){
+        echo "NOK1";
+        echo "<p class='error'>❌ Connexion échouée</p>";
     }
 }
 
 
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+
+    $email = $_POST['email'];
+    $login_pass = $_POST['login-pass'];
+
+    $res = $conn->query("SELECT * FROM user WHERE email = '$email'");
+
+    if ($res && $res->num_rows === 1) {
+
+        $row = $res->fetch_assoc();
+
+        if ($row['mdp'] === $login_pass) {
+            $_SESSION['user'] = $row['id'];
+            $_SESSION['email'] = $email;
+            header("Location: index.php");
+            exit();
+        } else {
+            echo "<p class='error'>❌ Mot de passe incorrect</p>";
+        }
+
+    } else {
+        echo "<p class='error'>❌ Email incorrect</p>";
+    }
+}

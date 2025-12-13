@@ -1,4 +1,10 @@
-
+<?php
+session_start();
+if(!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -18,7 +24,7 @@
             <button class="tab" onclick="showSection('courses')">📅 Cours</button>
             <button class="tab" onclick="showSection('equipments')">🏋️ Équipements</button>
             <button class="tab" onclick="showSection('associations')">🔗 Associations</button>
-            <a href="login.php" class="btn-logout" onclick="return confirm('Voulez-vous vraiment vous déconnecter?')">🚪 Déconnexion</a>
+            <a href="logout.php" class="btn-logout" onclick="return confirm('Voulez-vous vraiment vous déconnecter?')">🚪 Déconnexion</a>
         </div>
 
         <!-- Dashboard Section -->

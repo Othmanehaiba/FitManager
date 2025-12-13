@@ -394,49 +394,43 @@
         }
 
         // Handle login form submission
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
 
-            // Add your login logic here
-            console.log('Login:', { email, password });
+        // document.getElementById('login-form').addEventListener('submit', function(e) {
+        //     
             
-            // Simulate successful login
-            alert('Connexion réussie!');
+        //     const email = document.getElementById('login-email').value;
+        //     const password = document.getElementById('login-password').value;
+
+        //     // Add your login logic here
+        //     console.log('Login:', { email, password });
             
-            // Redirect to main application (change the path as needed)
-            window.location.href = '../index.php';
-        });
+            
+        // });
 
         // Handle signup form submission
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const firstname = document.getElementById('signup-firstname').value;
-            const lastname = document.getElementById('signup-lastname').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-            // Validate passwords match
-            if (password !== confirmPassword) {
-                alert('Les mots de passe ne correspondent pas!');
-                return;
-            }
+        // document.getElementById('signup-form').addEventListener('submit', function(e) {
+            
+        //     const firstname = document.getElementById('signup-firstname').value;
+        //     const lastname = document.getElementById('signup-lastname').value;
+        //     const email = document.getElementById('signup-email').value;
+        //     const password = document.getElementById('signup-password').value;
+        //     const confirmPassword = document.getElementById('signup-confirm-password').value;
 
-            // Add your signup logic here
-            console.log('Signup:', { firstname, lastname, email, password });
-            
-            // Simulate successful signup
-            alert('Inscription réussie! Vous pouvez maintenant vous connecter.');
-            
-            // Switch to login tab
-            <?php
-            header("Location : index.php")
-            ?>
-        });
+        //     // Validate passwords match
+        //     if (password !== confirmPassword) {
+        //         alert('Les mots de passe ne correspondent pas!');
+        //         return;
+        //     }
+
+        //     // Add your signup logic here
+        //     console.log('Signup:', { firstname, lastname, email, password });
+                        
+        //     // Switch to login tab
+        //     <?php
+        //     header("Location : index.php")
+        //     ?>
+        // });
     </script>
 </body>
 </html>
