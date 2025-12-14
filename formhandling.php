@@ -25,7 +25,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])){
     exit();
     if(!$row){
         echo "NOK1";
-        echo "<p class='error'>❌ Connexion échouée</p>";
+        $_SESSION['error'] = "❌ Connexion échouée";
+        header("Location: login.php");
+        exit();
     }
 }
 
@@ -48,10 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             header("Location: index.php");
             exit();
         } else {
-            echo "<p class='error'>❌ Mot de passe incorrect</p>";
+            $_SESSION['error'] = "<p class='error'>❌ Connexion échouée</p>";
+            header("Location: login.php");
+            exit();
         }
 
-    } else {
-        echo "<p class='error'>❌ Email incorrect</p>";
     }
 }

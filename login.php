@@ -1,3 +1,9 @@
+<?php
+session_start();
+$error = $_SESSION['error'];
+unset($_SESSION['error']);
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -338,6 +344,14 @@
 
             </form>
 
+            <?php if($error): ?>
+                <div class="my-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                      <p>
+                        <?= $error ?>
+                      </p>
+                  </div>
+              <?php endif; ?>
+
             <!-- Signup Form -->
             <form class="auth-form" id="signup-form" action="formhandling.php" method="post">
                 <h2 class="form-title">Créer un compte</h2>
@@ -369,9 +383,12 @@
                 </div>
 
                 <button type="submit" name="signup" class="btn-auth">S'inscrire</button>
-
-                
             </form>
+            <?php if($error): ?>
+                <div class="my-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                      <?= $error ?>
+                  </div>
+              <?php endif; ?>
         </div>
     </div>
 
